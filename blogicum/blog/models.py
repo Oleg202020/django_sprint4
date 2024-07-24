@@ -122,7 +122,7 @@ class Post(PublishedModel):
         ordering = ('-pub_date',)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Comment(PublishedModel):
@@ -130,14 +130,18 @@ class Comment(PublishedModel):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE,
         verbose_name='Автор публикации',
-        related_name='comments'
     )
     post = models.ForeignKey(
         Post, on_delete=models.CASCADE,
         verbose_name='Публикация',
-        related_name='comments'
+
     )
 
     class Meta:
         verbose_name = 'коментарий'
         verbose_name_plural = 'коментарии'
+        default_related_name = 'comments'
+        ordering = ('created_at',)
+
+    def __str__(self):
+        return self.text

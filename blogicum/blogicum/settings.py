@@ -141,6 +141,8 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
+PUBLIC_ON_THE_PAGE = 10
+
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
 
