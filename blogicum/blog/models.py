@@ -9,6 +9,8 @@ HARACTER_LIMIT_STR = 25
 
 
 class PublishedModel(models.Model):
+    """Модель добвляет для публикаций флаг и дату создания. Абстрактная"""
+
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
@@ -126,6 +128,8 @@ class Post(PublishedModel):
 
 
 class Comment(PublishedModel):
+    """Модель описывает данные комментария"""
+
     text = models.TextField('Текст')
     author = models.ForeignKey(
         User, on_delete=models.CASCADE,
