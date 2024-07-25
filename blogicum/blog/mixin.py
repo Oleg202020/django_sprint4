@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 
 from .forms import CommentForm, PostForm
 from .models import Comment, Post
@@ -53,3 +54,9 @@ class CommentUpdateDeleteMixin(LoginRequiredMixin):
         if instance.author != request.user:
             return redirect('blog:post_detail', post_id=self.kwargs['post_id'])
         return super().dispatch(request, *args, **kwargs)
+    
+    def get_success_url(self):
+        return reverse(
+            'blog:post_detail',
+            kwargs={'post_id': self.kwargs['post_id']}
+        )

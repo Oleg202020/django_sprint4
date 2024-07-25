@@ -15,7 +15,7 @@ from django.views.generic import (
 )
 
 from .forms import CommentForm, PostForm
-from .function import get_general_queryset_posts
+from .query_function import get_general_queryset_posts
 from .mixin import (
     PostMixin,
     EditContentMixin,
@@ -157,21 +157,9 @@ class CommentCreateView(LoginRequiredMixin, CommentMixin, CreateView):
 class CommentUpdateView(CommentUpdateDeleteMixin, CommentMixin, UpdateView):
     """CBV класс для редактриования комментария"""
 
-    def get_success_url(self):
-        return reverse(
-            'blog:post_detail',
-            kwargs={'post_id': self.kwargs['post_id']}
-        )
-
 
 class CommentDeleteView(CommentUpdateDeleteMixin, CommentMixin, DeleteView):
     """CBV класс для удаления комментария"""
-
-    def get_success_url(self):
-        return reverse(
-            'blog:post_detail',
-            kwargs={'post_id': self.kwargs['post_id']}
-        )
 
 
 class ProfileListView(ListView):
@@ -185,9 +173,7 @@ class ProfileListView(ListView):
 
     def get_queryset(self):
         author = self.get_autor()
-        filter_ = True
-        if self.request.user == author:
-            filter_ = False
+        filter_ = True if self.request.user != author else False
         queryset = get_general_queryset_posts(
             manager=author.posts,
             filter=filter_,
