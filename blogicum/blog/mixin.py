@@ -15,6 +15,10 @@ class PostMixin:
 
 
 class EditContentMixin(LoginRequiredMixin):
+    """
+    Проверку авторства для редактирования и удаления поста.
+    Если проверка провалена, то возвращает на страницу поста.
+    """
 
     def dispatch(self, request, *args, **kwargs):
         if self.get_object().author != request.user:
@@ -35,6 +39,10 @@ class CommentMixin:
 
 
 class CommentUpdateDeleteMixin(LoginRequiredMixin):
+    """
+    Проверку авторства для редактирования и удаления коментария.
+    Если проверка провалена, то возвращает на страницу поста.
+    """
 
     def dispatch(self, request, *args, **kwargs):
         instance = get_object_or_404(

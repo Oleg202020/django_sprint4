@@ -26,6 +26,8 @@ from .models import Category, Post, User
 
 
 class IndexListView(PostMixin, ListView):
+    """CBV главной страницы. Выводит список постов"""
+
     paginate_by = settings.PUBLIC_ON_THE_PAGE
 
     def get_queryset(self):
@@ -33,6 +35,8 @@ class IndexListView(PostMixin, ListView):
 
 
 class PostCreateView(LoginRequiredMixin, PostMixin, CreateView):
+    """CBV страница создания поста"""
+
     paginate_by = settings.PUBLIC_ON_THE_PAGE
     template_name = 'blog/create.html'
 
@@ -48,6 +52,8 @@ class PostCreateView(LoginRequiredMixin, PostMixin, CreateView):
 
 
 class PostDetailView(PostMixin, DetailView):
+    """CBV страница поста с комментариями к нему"""
+
     template_name = 'blog/detail.html'
 
     def get_queryset(self):
@@ -77,6 +83,8 @@ class PostDetailView(PostMixin, DetailView):
 
 
 class PostUpdateView(EditContentMixin, PostMixin, UpdateView):
+    """CBV страница редактирования поста"""
+
     paginate_by = settings.PUBLIC_ON_THE_PAGE
     template_name = 'blog/create.html'
 
@@ -88,6 +96,8 @@ class PostUpdateView(EditContentMixin, PostMixin, UpdateView):
 
 
 class PostDeleteView(EditContentMixin, PostMixin, DeleteView):
+    """CBV страница удаления поста автором"""
+
     template_name = 'blog/create.html'
 
     def get_context_data(self, **kwargs):
@@ -103,6 +113,8 @@ class PostDeleteView(EditContentMixin, PostMixin, DeleteView):
 
 
 class CategoryListView(ListView):
+    """CBV страница категории. Выводит список постов в категории."""
+
     model = Category
     paginate_by = settings.PUBLIC_ON_THE_PAGE
     template_name = 'blog/category.html'
@@ -125,6 +137,8 @@ class CategoryListView(ListView):
 
 
 class CommentCreateView(LoginRequiredMixin, CommentMixin, CreateView):
+    """CBV класс для создания комментария"""
+
     def get_success_url(self):
         return reverse(
             'blog:post_detail',
@@ -141,6 +155,8 @@ class CommentCreateView(LoginRequiredMixin, CommentMixin, CreateView):
 
 
 class CommentUpdateView(CommentUpdateDeleteMixin, CommentMixin, UpdateView):
+    """CBV класс для редактриования комментария"""
+
     def get_success_url(self):
         return reverse(
             'blog:post_detail',
@@ -149,6 +165,7 @@ class CommentUpdateView(CommentUpdateDeleteMixin, CommentMixin, UpdateView):
 
 
 class CommentDeleteView(CommentUpdateDeleteMixin, CommentMixin, DeleteView):
+    """CBV класс для удаления комментария"""
 
     def get_success_url(self):
         return reverse(
@@ -158,6 +175,8 @@ class CommentDeleteView(CommentUpdateDeleteMixin, CommentMixin, DeleteView):
 
 
 class ProfileListView(ListView):
+    """CBV страница пользователя с публикациями"""
+
     paginate_by = settings.PUBLIC_ON_THE_PAGE
     template_name = 'blog/profile.html'
 
@@ -183,6 +202,8 @@ class ProfileListView(ListView):
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    """CBV страница редактирования данных пользователя"""
+
     template_name = 'blog/user.html'
     fields = ('username', 'first_name', 'last_name', 'email')
 
@@ -197,6 +218,8 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ProfileCreateView(CreateView):
+    """CBV страница регистарции пользователя"""
+
     form_class = UserCreationForm,
     template_name = 'registration/registration_form.html'
     success_url = reverse_lazy('blog:index')
