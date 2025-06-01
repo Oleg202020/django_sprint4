@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.urls import reverse
 from django.db import models
-
+from django.urls import reverse
 
 User = get_user_model()
 HEADER_LIMIT_STR = 256
@@ -22,7 +21,7 @@ class PublishedModel(models.Model):
     )
 
     class Meta:
-        abstract = True,
+        abstract = True
 
     def __str__(self):
         return self.title[:HARACTER_LIMIT_STR]

@@ -3,26 +3,16 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import (
-    CreateView,
-    ListView,
-    DetailView,
-    UpdateView,
-    DeleteView,
-)
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 
 from .forms import CommentForm, PostForm
-from .query_function import get_general_queryset_posts
-from .mixin import (
-    PostMixin,
-    EditContentMixin,
-    CommentMixin,
-    CommentUpdateDeleteMixin
-)
+from .mixin import (CommentMixin, CommentUpdateDeleteMixin, EditContentMixin,
+                    PostMixin)
 from .models import Category, Post, User
+from .query_function import get_general_queryset_posts
 
 
 class IndexListView(PostMixin, ListView):
@@ -206,6 +196,6 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 class ProfileCreateView(CreateView):
     """CBV страница регистарции пользователя"""
 
-    form_class = UserCreationForm,
+    form_class = UserCreationForm
     template_name = 'registration/registration_form.html'
     success_url = reverse_lazy('blog:index')
