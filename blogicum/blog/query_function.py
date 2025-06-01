@@ -9,7 +9,7 @@ def get_general_queryset_posts(
         filter=True,
         annotation=True
 ):
-    """Функция производит сортировку данных по условиям фильтра"""
+    """Функция производит сортировку данных по условиям фильтра."""
     queryset = manager.select_related(
         'author',
         'location',
